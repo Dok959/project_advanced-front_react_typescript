@@ -15,8 +15,12 @@
       {
         "name": "typescript-plugin-css-modules"
       }
-    ]
+    ],
+    "strictNullChecks": true
   },
+  // "include": [
+  //     ".eslintrc.js",
+  // ],
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS"
