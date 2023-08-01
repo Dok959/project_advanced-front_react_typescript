@@ -12,6 +12,7 @@ parserOptions:
     ecmaVersion: latest
     sourceType: module
     project: 'tsconfig.eslint.json' # './tsconfig.json'
+settings: { 'react': { 'version': 'detect' } }
 plugins:
     - react
     - '@typescript-eslint'

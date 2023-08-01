@@ -8,6 +8,7 @@
 
         // add all files in which you see
         // the "parserOptions.project" error
-        ".eslintrc.yml"
+        ".eslintrc.yml",
+        "**/*.config.ts" // "webpack.config.ts"
     ]
 }

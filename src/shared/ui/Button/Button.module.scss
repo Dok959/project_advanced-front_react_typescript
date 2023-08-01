@@ -9,3 +9,13 @@
     border: none;
     outline: none;
 }
+
+.outline {
+    padding: 10px 15px;
+
+    font-size: var(--font-l);
+    color: #0232c2; // var(--primary-color);
+
+    background: none;
+    border: 1px solid var(--primary-color);
+}
