@@ -1,5 +1,5 @@
 name: linting, testing, building
-run-name: ${{ github.actor }} is learning GitHub Actions
+run-name: ${{ github.actor }} - linting, testing, building
 on:
     push:
         branches: [master]
@@ -10,7 +10,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-            node-version: [17.x]
+                node-version: [17.x]
 
         steps:
             - uses: actions/checkout@v3
