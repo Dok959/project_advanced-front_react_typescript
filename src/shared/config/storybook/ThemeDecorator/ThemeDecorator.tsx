@@ -1,10 +1,13 @@
-import { Decorator, Story, StoryFn, StoryObj } from '@storybook/react';
+import { type StoryFn } from '@storybook/react';
+import { type Theme } from 'app/providers/ThemeProvider';
 
-export const ThemeDecorator = (Story: Story): Decorator => {
-    // return <div>{story()}</div>;
-    return (
-        <div>
-            <Story />
-        </div>
-    );
-};
+export const ThemeDecorator =
+    (theme: Theme) =>
+    // eslint-disable-next-line react/display-name
+    (Story: StoryFn): JSX.Element => {
+        return (
+            <div className={`app ${theme}`}>
+                <Story />
+            </div>
+        );
+    };

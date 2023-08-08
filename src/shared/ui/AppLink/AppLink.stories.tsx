@@ -1,18 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Button, ThemeButton } from './Button';
+import { AppLink, AppLinkTheme } from './AppLink';
 import { ThemeDecorator } from 'shared/config/storybook/ThemeDecorator/ThemeDecorator';
 import { Theme } from 'app/providers/ThemeProvider';
 
-const meta: Meta<typeof Button> = {
-    title: 'shared/Button',
-    component: Button,
+const meta: Meta<typeof AppLink> = {
+    title: 'shared/AppLink',
+    component: AppLink,
     parameters: {
         // layout: 'centered',
     },
     tags: ['autodocs'],
     argTypes: {
         // backgroundColor: { control: 'color' },
+    },
+    args: {
+        to: '/',
     },
 };
 
@@ -22,27 +25,29 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
     args: {
         children: 'Text',
+        theme: AppLinkTheme.PRIMARY,
     },
 };
 
-export const Clear: Story = {
+export const Secondary: Story = {
     args: {
         children: 'Text',
-        theme: ThemeButton.CLEAR,
+        theme: AppLinkTheme.SECONDARY,
     },
 };
 
-export const Outline: Story = {
+export const PrimaryDark: Story = {
     args: {
         children: 'Text',
-        theme: ThemeButton.OUTLINE,
+        theme: AppLinkTheme.PRIMARY,
     },
+    decorators: [ThemeDecorator(Theme.DARK)],
 };
 
-export const OutlineDark: Story = {
+export const SecondaryDark: Story = {
     args: {
         children: 'Text',
-        theme: ThemeButton.OUTLINE,
+        theme: AppLinkTheme.SECONDARY,
     },
-    decorators: [(Story) => ThemeDecorator(Theme.DARK)(Story)],
+    decorators: [ThemeDecorator(Theme.DARK)],
 };
