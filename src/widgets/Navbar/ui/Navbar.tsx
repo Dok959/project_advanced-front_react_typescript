@@ -29,7 +29,6 @@ export const Navbar = ({ className = '' }: NavbarProps): JSX.Element => {
         dispatch(userActions.logout());
     }, [dispatch]);
 
-    console.log(authData);
     if (authData !== undefined && authData !== null) {
         return (
             <div className={classNames(cls.Navbar, {}, [className])}>
@@ -53,7 +52,9 @@ export const Navbar = ({ className = '' }: NavbarProps): JSX.Element => {
             >
                 {t('Войти')}
             </Button>
-            <LoginModal isOpen={isAuthModal} onClose={onCloseModal} />
+            {isAuthModal && (
+                <LoginModal isOpen={isAuthModal} onClose={onCloseModal} />
+            )}
         </div>
     );
 };

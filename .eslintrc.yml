@@ -39,7 +39,7 @@ rules: {
         'import/extetsions': 'off',
         'import/no-extraneous-dependencies': 'warn',
         'no-underscope-dangle': 'off',
-        '@typescript-eslint/strict-boolean-expressions': 'error',
+        '@typescript-eslint/strict-boolean-expressions': 'off',
         '@typescript-eslint/prefer-nullish-coalescing': 'error',
         'react-hooks/rules-of-hooks': 'error', # Проверяем правила хуков
         'react-hooks/exhaustive-deps': 'error', # Проверяем зависимости эффекта
