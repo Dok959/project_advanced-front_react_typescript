@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { userActions, type User } from 'entities/User';
 import { USER_LOCALSTORAGE_KEY } from 'shared/const/localstorage';
+import { userActions, type User } from 'entities/User';
 
 interface LoginByUsernameProps {
     username: string;
@@ -12,6 +12,11 @@ interface LoginByUsernameProps {
 //     INCORRECT_DATA = '',
 //     SERVER_ERROR = '',
 // }
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+function isEmpty(obj: Object): boolean {
+    return Object.keys(obj).length === 0;
+}
 
 export const loginByUsername = createAsyncThunk<
     User,
@@ -24,7 +29,8 @@ export const loginByUsername = createAsyncThunk<
             authData,
         );
 
-        if (response.data === null) {
+        // 20
+        if (response.data === null || isEmpty(response.data)) {
             throw new Error();
         }
 

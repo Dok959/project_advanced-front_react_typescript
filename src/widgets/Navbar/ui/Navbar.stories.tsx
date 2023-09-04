@@ -33,7 +33,7 @@ export const AuthNavbar: Story = {
         ThemeDecorator(Theme.DARK),
         StoreDecorator({
             user: {
-                authData: { id: 1, username: 'user' },
+                authData: { id: '1', username: 'user' },
             },
         }),
     ],
