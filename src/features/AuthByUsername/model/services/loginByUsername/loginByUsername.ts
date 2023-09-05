@@ -29,7 +29,6 @@ export const loginByUsername = createAsyncThunk<
             authData,
         );
 
-        // 20
         if (response.data === null || isEmpty(response.data)) {
             throw new Error();
         }

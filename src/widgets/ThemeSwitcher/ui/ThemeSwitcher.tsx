@@ -3,14 +3,15 @@ import { classNames } from 'shared/lib/classNames/classNames';
 import LightIcon from 'shared/assets/icons/theme-light.svg';
 import DarkIcon from 'shared/assets/icons/theme-dark.svg';
 import { Button, ButtonTheme } from 'shared/ui/Button/Button';
+import { memo } from 'react';
 
 interface ThemeSwitcherProps {
     className?: string;
 }
 
-export const ThemeSwitcher = ({
+export const ThemeSwitcher = memo(function ThemeSwitcher({
     className = '',
-}: ThemeSwitcherProps): JSX.Element => {
+}: ThemeSwitcherProps): JSX.Element {
     const { theme, toggleTheme } = useTheme();
 
     return (
@@ -22,4 +23,4 @@ export const ThemeSwitcher = ({
             {theme === Theme.DARK ? <DarkIcon /> : <LightIcon />}
         </Button>
     );
-};
+});
