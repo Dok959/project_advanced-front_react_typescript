@@ -9,7 +9,6 @@ import { userActions } from 'entities/User';
 
 const App = (): JSX.Element => {
     const { theme } = useTheme();
-
     const dispatch = useDispatch();
 
     useEffect(() => {
