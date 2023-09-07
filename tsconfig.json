@@ -16,7 +16,8 @@
                 "name": "typescript-plugin-css-modules"
             }
         ],
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "strict": true
     },
     "include": [
         "src",

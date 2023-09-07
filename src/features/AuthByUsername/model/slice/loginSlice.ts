@@ -20,7 +20,6 @@ export const loginSchema = createSlice({
         },
     },
     extraReducers: (builder) => {
-        // Add reducers for additional action types here, and handle loading state as needed
         builder.addCase(loginByUsername.pending, (state) => {
             state.error = undefined;
             state.isLoading = true;
