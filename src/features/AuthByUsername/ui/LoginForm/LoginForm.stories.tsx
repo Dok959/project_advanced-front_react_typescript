@@ -34,7 +34,6 @@ export const withError: Story = {
                 username: '123',
                 password: 'sad',
                 error: 'ERROR',
-                isLoading: false,
             },
         }),
     ],
@@ -43,7 +42,9 @@ export const Loading: Story = {
     args: {},
     decorators: [
         StoreDecorator({
-            loginForm: { username: '', password: '', isLoading: true },
+            loginForm: {
+                isLoading: true,
+            },
         }),
     ],
 };
