@@ -45,6 +45,8 @@ declare module '*.svg' {
 declare const __IS_DEV__: boolean;
 // eslint-disable-next-line @typescript-eslint/naming-convention
 declare const __API__: string;
+// eslint-disable-next-line @typescript-eslint/naming-convention
+declare const __PROJECT__: 'storybook' | 'jest' | 'frontend';
 
 type DeepPartial<T> = T extends object
     ? {
