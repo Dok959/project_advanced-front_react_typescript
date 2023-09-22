@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import ArticlePages from './ArticlesPage';
+import { Code } from './Code';
 
-const meta: Meta<typeof ArticlePages> = {
-    title: 'pages/ArticlePages',
-    component: ArticlePages,
+const meta: Meta<typeof Code> = {
+    title: 'shared/Code',
+    component: Code,
     parameters: {
         // layout: 'centered',
     },
@@ -18,5 +18,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Normal: Story = {
-    args: {},
+    args: {
+        text: ' export default meta; type Story = StoryObj<typeof meta>;',
+    },
 };

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Text, TextTheme } from './Text';
+import { Text, TextSize, TextTheme } from './Text';
 import { ThemeDecorator } from 'shared/config/storybook/ThemeDecorator/ThemeDecorator';
 import { Theme } from 'app/providers/ThemeProvider';
 
@@ -65,5 +65,13 @@ export const Error: Story = {
         title: 'Title lorem ipsum',
         text: 'Description Description Description Description',
         theme: TextTheme.ERROR,
+    },
+};
+
+export const SizeL: Story = {
+    args: {
+        title: 'Title lorem ipsum',
+        text: 'Description Description Description Description',
+        size: TextSize.L,
     },
 };

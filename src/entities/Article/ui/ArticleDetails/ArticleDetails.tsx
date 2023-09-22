@@ -1,5 +1,5 @@
 import { classNames } from 'shared/lib/classNames/classNames';
-import { Text, TextAlign } from 'shared/ui/Text/Text';
+import { Text, TextAlign, TextSize } from 'shared/ui/Text/Text';
 import cls from './ArticleDetails.module.scss';
 import { useTranslation } from 'react-i18next';
 import {
@@ -7,7 +7,7 @@ import {
     type ReducersList,
 } from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
 import { articleDetailsReducer } from '../../model/slice/articleDetailsSlice';
-import { memo, useEffect } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { fetchArticleById } from '../../model/services/fetchArticleById/fetchArticleById';
 import { useSelector } from 'react-redux';
@@ -17,6 +17,14 @@ import {
     getArticleDetailsError,
 } from '../../model/selectors/articleDetails';
 import { Skeleton } from 'shared/ui/Skeleton/Skeleton';
+import { Avatar } from 'shared/ui/Avatar/Avatar';
+import CalendarIcon from 'shared/assets/icons/calendar.svg';
+import EyeIcon from 'shared/assets/icons/eye.svg';
+import { Icon } from 'shared/ui/Icon/Icon';
+import { type ArticleBlock, ArticleBlockType } from '../../model/types/article';
+import { ArticleCodeBlockComponent } from '../ArticleCodeBlockComponent/ArticleCodeBlockComponent';
+import { ArticleImageBlockComponent } from '../ArticleImageBlockComponent/ArticleImageBlockComponent';
+import { ArticleTextBlockComponent } from '../ArticleTextBlockComponent/ArticleTextBlockComponent';
 
 interface ArticleDetailsProps {
     className?: string;
@@ -33,20 +41,53 @@ export const ArticleDetails = memo(function ArticleDetails(
     const { className = '', id } = props;
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
-    const isLoading = true;
-    // const isLoading = useSelector(getArticleDetailsIsLoading);
+    const isLoading = useSelector(getArticleDetailsIsLoading);
     const article = useSelector(getArticleDetailsData);
     const error = useSelector(getArticleDetailsError);
 
+    const renderBlock = useCallback((block: ArticleBlock) => {
+        switch (block.type) {
+            case ArticleBlockType.CODE:
+                return (
+                    <ArticleCodeBlockComponent
+                        block={block}
+                        className={cls.block}
+                        key={block.id}
+                    />
+                );
+            case ArticleBlockType.IMAGE:
+                return (
+                    <ArticleImageBlockComponent
+                        block={block}
+                        className={cls.block}
+                        key={block.id}
+                    />
+                );
+            case ArticleBlockType.TEXT:
+                return (
+                    <ArticleTextBlockComponent
+                        block={block}
+                        className={cls.block}
+                        key={block.id}
+                    />
+                );
+
+            default:
+                return null;
+        }
+    }, []);
+
     useEffect(() => {
-        dispatch<any>(fetchArticleById(id));
+        if (__PROJECT__ !== 'storybook') {
+            dispatch<any>(fetchArticleById(id));
+        }
     }, [dispatch, id]);
 
     let content;
 
     if (isLoading) {
         content = (
-            <div>
+            <>
                 <Skeleton
                     className={cls.avatar}
                     width={200}
@@ -65,7 +106,7 @@ export const ArticleDetails = memo(function ArticleDetails(
                     width={'100%'}
                     height={200}
                 />
-            </div>
+            </>
         );
     } else if (error) {
         content = (
@@ -75,7 +116,32 @@ export const ArticleDetails = memo(function ArticleDetails(
             />
         );
     } else {
-        content = <div>ArticleDetails</div>;
+        content = (
+            <>
+                <div className={cls.avatarWrapper}>
+                    <Avatar
+                        size={200}
+                        src={article?.img}
+                        className={cls.avatar}
+                    />
+                </div>
+                <Text
+                    className={cls.title}
+                    title={article?.title}
+                    text={article?.subtitle}
+                    size={TextSize.L}
+                />
+                <div className={cls.articleInfo}>
+                    <Icon Svg={EyeIcon} className={cls.icon} />
+                    <Text text={String(article?.views)} />
+                </div>
+                <div className={cls.articleInfo}>
+                    <Icon Svg={CalendarIcon} className={cls.icon} />
+                    <Text text={article?.createdAt} />
+                </div>
+                {article?.blocks.map((block) => renderBlock(block))}
+            </>
+        );
     }
 
     return (
