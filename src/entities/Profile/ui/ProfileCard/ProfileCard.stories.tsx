@@ -6,8 +6,6 @@ import { ProfileCard } from './ProfileCard';
 import { Country } from 'entities/Country';
 import { Currency } from 'entities/Currency';
 // import { StoreDecorator } from 'shared/config/storybook/StoreDecorator/StoreDecorator';
-// import { Country } from 'entities/Country';
-// import { Currency } from 'entities/Currency';
 import AvatarImg from 'shared/assets/tests/storybook.jpg';
 
 const meta: Meta<typeof ProfileCard> = {
@@ -41,14 +39,14 @@ export const Primary: Story = {
     // decorators: [StoreDecorator({})],
 };
 
-export const isLoading: Story = {
+export const ProfileCardIsLoading: Story = {
     args: {
         isLoading: true,
     },
     // decorators: [ThemeDecorator(Theme.DARK), StoreDecorator({})],
 };
 
-export const withError: Story = {
+export const ProfileCardWithError: Story = {
     args: {
         error: 'error',
     },
