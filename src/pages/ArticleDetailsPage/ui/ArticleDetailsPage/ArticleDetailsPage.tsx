@@ -2,7 +2,7 @@ import { classNames } from 'shared/lib/classNames/classNames';
 import { Text } from 'shared/ui/Text/Text';
 import cls from './ArticleDetailsPage.module.scss';
 import { useTranslation } from 'react-i18next';
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import { ArticleDetails } from 'entities/Article';
 import { useParams } from 'react-router-dom';
 import { CommentList } from 'entities/Comment';
@@ -13,12 +13,14 @@ import {
 import {
     articleCommentsListReducer,
     getArticleComments,
+    addCommentForArticle,
+    fetchCommentsByArticleId,
+    getArticleCommentsIsLoading,
 } from 'features/ArticleCommentList';
 import { useSelector } from 'react-redux';
-import { getArticleCommentsIsLoading } from 'features/ArticleCommentList/model/selectors/getArticleComments';
 import { useInitialEffect } from 'shared/lib/hooks/useInitialEffect/useInitialEffect';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
-import { fetchCommentsByArticleId } from 'features/ArticleCommentList/model/services/fetchCommentsByArticleId/fetchCommentsByArticleId';
+import { AddCommentForm } from 'features/addCommentForm';
 
 interface ArticleDetailsPageProps {
     className?: string;
@@ -35,6 +37,13 @@ const ArticleDetailsPage = (props: ArticleDetailsPageProps): JSX.Element => {
     const comments = useSelector(getArticleComments.selectAll);
     const commentsIsLoading = useSelector(getArticleCommentsIsLoading);
     const dispatch = useAppDispatch();
+
+    const onSendComment = useCallback(
+        (text: string) => {
+            dispatch<any>(addCommentForArticle(text));
+        },
+        [dispatch],
+    );
 
     useInitialEffect(() => {
         dispatch<any>(fetchCommentsByArticleId(id));
@@ -59,6 +68,7 @@ const ArticleDetailsPage = (props: ArticleDetailsPageProps): JSX.Element => {
             >
                 <ArticleDetails id={id} />
                 <Text title={t('Комментарии')} className={cls.commentTitle} />
+                <AddCommentForm onSendComment={onSendComment} />
                 <CommentList
                     isLoading={commentsIsLoading}
                     comments={comments}

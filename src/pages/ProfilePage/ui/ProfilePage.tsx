@@ -17,13 +17,15 @@ import {
     profileActions,
     profileReducer,
 } from 'entities/Profile';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { Text, TextTheme } from 'shared/ui/Text/Text';
 import { useSelector } from 'react-redux';
 import { ProfilePageHeader } from './ProfilePageHeader/ProfilePageHeader';
 import { type Currency } from 'entities/Currency';
 import { type Country } from 'entities/Country';
+import { useInitialEffect } from 'shared/lib/hooks/useInitialEffect/useInitialEffect';
+import { useParams } from 'react-router-dom';
 
 const reducers: ReducersList = {
     profile: profileReducer,
@@ -37,12 +39,12 @@ const ProfilePage = (props: ProfilePageProps): JSX.Element => {
     const { className = '' } = props;
     const { t } = useTranslation('profile');
     const dispatch = useAppDispatch();
-
     const formData = useSelector(getProfileForm);
     const isLoading = useSelector(getProfileIsLoading);
     const error = useSelector(getProfileError);
     const readonly = useSelector(getProfileReadonly);
     const validateErrors = useSelector(getProfileValidateErrors);
+    const { id } = useParams<{ id: string }>();
 
     const validateErrorTranslates = {
         [ValidateProfileError.NO_DATA]: t('Данные не указаны'),
@@ -54,11 +56,11 @@ const ProfilePage = (props: ProfilePageProps): JSX.Element => {
         [ValidateProfileError.INCORRECT_COUNTRY]: t('Некорректный регион'),
     };
 
-    useEffect(() => {
-        if (__PROJECT__ !== 'storybook') {
-            dispatch<any>(fetchProfileData());
+    useInitialEffect(() => {
+        if (id) {
+            dispatch<any>(fetchProfileData(id));
         }
-    }, [dispatch]);
+    });
 
     const onChangeFirstName = useCallback(
         (value?: string) => {
