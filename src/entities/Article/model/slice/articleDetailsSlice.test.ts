@@ -10,6 +10,10 @@ const data: Article = {
     img: 'path',
     views: 2020,
     createdAt: '01.01.2023',
+    user: {
+        id: '1',
+        username: 'adad',
+    },
     type: [ArticleType.IT],
     blocks: [
         { id: '1', type: ArticleBlockType.TEXT, paragraphs: ['lorem ipsum'] },

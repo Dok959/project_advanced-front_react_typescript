@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { ArticleDetails } from './ArticleDetails';
-import { StoreDecorator } from 'shared/config/storybook/StoreDecorator/StoreDecorator';
+import { ArticleListItem } from './ArticleListItem';
 import {
-    ArticleType,
     type Article,
+    ArticleView,
     ArticleBlockType,
+    ArticleType,
 } from '../../model/types/article';
 
-const meta: Meta<typeof ArticleDetails> = {
-    title: 'entities/ArticleDetails',
-    component: ArticleDetails,
+const meta: Meta<typeof ArticleListItem> = {
+    title: 'entities/Article/ArticleListItem',
+    component: ArticleListItem,
     parameters: {
         // layout: 'centered',
     },
@@ -69,35 +69,16 @@ const article: Article = {
     ],
 };
 
-export const Normal: Story = {
-    args: {},
-    decorators: [
-        StoreDecorator({
-            articleDetails: {
-                data: article,
-            },
-        }),
-    ],
+export const ArticleListItemNormalBig: Story = {
+    args: {
+        view: ArticleView.BIG,
+        article,
+    },
 };
 
-export const Loading: Story = {
-    args: {},
-    decorators: [
-        StoreDecorator({
-            articleDetails: {
-                isLoading: true,
-            },
-        }),
-    ],
-};
-
-export const Error: Story = {
-    args: {},
-    decorators: [
-        StoreDecorator({
-            articleDetails: {
-                error: 'error',
-            },
-        }),
-    ],
+export const ArticleListItemNormalSmall: Story = {
+    args: {
+        view: ArticleView.SMALL,
+        article,
+    },
 };

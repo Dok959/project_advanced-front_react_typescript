@@ -30,6 +30,10 @@ const article: Article = {
     img: 'https://www.comp-web-pro.ru/wp-content/uploads/2022/04/scale_1200.webp',
     views: 1022,
     createdAt: '06.09.2023',
+    user: {
+        id: '1',
+        username: 'adad',
+    },
     type: [ArticleType.IT],
     blocks: [
         {

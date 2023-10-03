@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { ArticleDetails } from './ArticleDetails';
-import { StoreDecorator } from 'shared/config/storybook/StoreDecorator/StoreDecorator';
+import { ArticleList } from './ArticleList';
 import {
-    ArticleType,
     type Article,
+    ArticleView,
     ArticleBlockType,
+    ArticleType,
 } from '../../model/types/article';
 
-const meta: Meta<typeof ArticleDetails> = {
-    title: 'entities/ArticleDetails',
-    component: ArticleDetails,
+const meta: Meta<typeof ArticleList> = {
+    title: 'entities/Article/ArticleList',
+    component: ArticleList,
     parameters: {
         // layout: 'centered',
     },
@@ -69,35 +69,36 @@ const article: Article = {
     ],
 };
 
-export const Normal: Story = {
-    args: {},
-    decorators: [
-        StoreDecorator({
-            articleDetails: {
-                data: article,
-            },
-        }),
-    ],
+export const ArticleListNormalBig: Story = {
+    args: {
+        view: ArticleView.BIG,
+        articles: new Array(3)
+            .fill(0)
+            .map((item, index) => ({ ...article, id: String(index) })),
+    },
 };
 
-export const Loading: Story = {
-    args: {},
-    decorators: [
-        StoreDecorator({
-            articleDetails: {
-                isLoading: true,
-            },
-        }),
-    ],
+export const ArticleListNormalSmall: Story = {
+    args: {
+        view: ArticleView.SMALL,
+        articles: new Array(9)
+            .fill(0)
+            .map((item, index) => ({ ...article, id: String(index) })),
+    },
 };
 
-export const Error: Story = {
-    args: {},
-    decorators: [
-        StoreDecorator({
-            articleDetails: {
-                error: 'error',
-            },
-        }),
-    ],
+export const ArticleListIsLoadingBig: Story = {
+    args: {
+        isLoading: true,
+        articles: [],
+        view: ArticleView.BIG,
+    },
+};
+
+export const ArticleListIsLoadingSmall: Story = {
+    args: {
+        isLoading: true,
+        articles: [],
+        view: ArticleView.SMALL,
+    },
 };
