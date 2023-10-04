@@ -7,6 +7,6 @@ export const ArticleDetailsPageAsync = lazy(
                 // @ts-ignore
                 // Задержка для демонстрации работы
                 resolve(import('./ArticleDetailsPage'));
-            }, 1500);
+            }, 400);
         }),
 );
