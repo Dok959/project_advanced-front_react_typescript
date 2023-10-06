@@ -30,8 +30,8 @@ export const ArticleListItem = memo(function ArticleListItem(
 ): JSX.Element {
     const { className = '', article, view } = props;
     const { t } = useTranslation();
+    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
     const [isHover, bindHover] = useHover();
-    console.log(isHover);
 
     const navigate = useNavigate();
     const onOpenArticle = useCallback(() => {
@@ -97,6 +97,7 @@ export const ArticleListItem = memo(function ArticleListItem(
 
     return (
         <div
+            // eslint-disable-next-line react/jsx-props-no-spreading
             {...bindHover}
             className={classNames('cls.ArticleListItem', {}, [
                 className,

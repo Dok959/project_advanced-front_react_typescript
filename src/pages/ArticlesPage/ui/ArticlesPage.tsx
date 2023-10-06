@@ -1,10 +1,10 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './ArticlesPage.module.scss';
-// import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { memo, useCallback } from 'react';
 import {
     ArticleList,
-    ArticleView,
+    type ArticleView,
     ArticleViewSelector,
 } from 'entities/Article';
 import {
@@ -25,6 +25,9 @@ import {
     getArticlesPageIsLoading,
     getArticlesPageView,
 } from '../model/selectors/articlesPageSelectors';
+import { Page } from 'shared/ui/Page/Page';
+import { Text, TextAlign, TextTheme } from 'shared/ui/Text/Text';
+import { fetchNextArticlesPage } from '../model/services/fetchNextArticlesPage/fetchNextArticlesPage';
 
 interface ArticlesPageProps {
     className?: string;
@@ -36,16 +39,21 @@ const reducers: ReducersList = {
 
 const ArticlesPage = (props: ArticlesPageProps): JSX.Element => {
     const { className = '' } = props;
-    // const { t } = useTranslation('articles');
+    const { t } = useTranslation();
 
     const dispatch = useAppDispatch();
     const articles = useSelector(getArticles.selectAll);
     const isLoading = useSelector(getArticlesPageIsLoading);
     const error = useSelector(getArticlesPageError);
     const view = useSelector(getArticlesPageView);
+
     useInitialEffect(() => {
-        dispatch<any>(fetchArticlesList());
         dispatch(articlePageActions.initState());
+        dispatch<any>(
+            fetchArticlesList({
+                page: 1,
+            }),
+        );
     });
 
     const onChangeView = useCallback(
@@ -55,16 +63,36 @@ const ArticlesPage = (props: ArticlesPageProps): JSX.Element => {
         [dispatch],
     );
 
+    const onLoadNextPart = useCallback(() => {
+        dispatch<any>(fetchNextArticlesPage());
+    }, [dispatch]);
+
+    if (error) {
+        return (
+            <Page className={classNames(cls.ArticlesPage, {}, [className])}>
+                <Text
+                    theme={TextTheme.ERROR}
+                    title={t('Произошла ошибка при загрузке статей')}
+                    text={t('Попробуйте обновить страницу')}
+                    align={TextAlign.CENTER}
+                />
+            </Page>
+        );
+    }
+
     return (
         <DynamicModuleLoader reducers={reducers}>
-            <div className={classNames(cls.ArticlesPage, {}, [className])}>
+            <Page
+                className={classNames(cls.ArticlesPage, {}, [className])}
+                onScrollEnd={onLoadNextPart}
+            >
                 <ArticleViewSelector view={view} onViewClick={onChangeView} />
                 <ArticleList
                     isLoading={isLoading}
                     view={view}
                     articles={articles}
                 />
-            </div>
+            </Page>
         </DynamicModuleLoader>
     );
 };

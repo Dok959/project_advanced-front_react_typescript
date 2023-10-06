@@ -9,7 +9,7 @@ import { RequireAuth } from './RequireAuth';
 
 export const AppRouter = memo(function AppRouter(): JSX.Element {
     const renderWithWrapper = useCallback((route: AppRouterProps) => {
-        const element = <div className="page-wrapper">{route.element}</div>;
+        const element = <>{route.element}</>;
 
         return (
             <Route
