@@ -18,7 +18,6 @@ import {
 } from '../model/slice/articlesPageSlice';
 import { useInitialEffect } from 'shared/lib/hooks/useInitialEffect/useInitialEffect';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
-import { fetchArticlesList } from '../model/services/fetchArticlesList/fetchArticlesList';
 import { useSelector } from 'react-redux';
 import {
     getArticlesPageError,
@@ -28,6 +27,7 @@ import {
 import { Page } from 'shared/ui/Page/Page';
 import { Text, TextAlign, TextTheme } from 'shared/ui/Text/Text';
 import { fetchNextArticlesPage } from '../model/services/fetchNextArticlesPage/fetchNextArticlesPage';
+import { initArticlesPage } from '../model/services/initArticlesPage/initArticlesPage';
 
 interface ArticlesPageProps {
     className?: string;
@@ -48,12 +48,7 @@ const ArticlesPage = (props: ArticlesPageProps): JSX.Element => {
     const view = useSelector(getArticlesPageView);
 
     useInitialEffect(() => {
-        dispatch(articlePageActions.initState());
-        dispatch<any>(
-            fetchArticlesList({
-                page: 1,
-            }),
-        );
+        dispatch<any>(initArticlesPage());
     });
 
     const onChangeView = useCallback(
@@ -81,7 +76,7 @@ const ArticlesPage = (props: ArticlesPageProps): JSX.Element => {
     }
 
     return (
-        <DynamicModuleLoader reducers={reducers}>
+        <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
             <Page
                 className={classNames(cls.ArticlesPage, {}, [className])}
                 onScrollEnd={onLoadNextPart}
