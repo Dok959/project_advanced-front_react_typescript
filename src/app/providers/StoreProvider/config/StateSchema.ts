@@ -19,10 +19,12 @@ import { type ArticleCommentsListSchema } from 'features/ArticleCommentList';
 import { type LoginSchema } from 'features/AuthByUsername';
 import { type addCommentFormSchema } from 'features/addCommentForm';
 import { type ArticlesPageSchema } from 'pages/ArticlesPage';
+import { type ScrollSaveSchema } from 'widgets/Page/ui/ScrollSave';
 
 export interface StateSchema {
     counter: CounterSchema;
     user: UserSchema;
+    scroll: ScrollSaveSchema;
 
     // Асинхронные редюсеры
     loginForm?: LoginSchema;
